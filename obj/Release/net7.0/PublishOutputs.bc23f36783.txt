@@ -1,0 +1,15 @@
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\TostiElotes.exe
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\appsettings.Development.json
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\appsettings.json
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\Infrastructure\Data\order.library.data.json
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\TostiElotes.dll
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\TostiElotes.deps.json
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\TostiElotes.runtimeconfig.json
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\TostiElotes.pdb
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\AutoMapper.dll
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\Microsoft.OpenApi.dll
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\aleja\OneDrive\Documentos\Apps Web\JAVASCRIPT\TostiElotes\TostiElotes\TostiElotes\publish\Swashbuckle.AspNetCore.SwaggerUI.dll
