@@ -10,9 +10,9 @@ namespace TostiElotes.Controllers.V1;
 [Route("api/[controller]")]
 public class OrderController : ControllerBase
 {
-    private readonly OrderServices _orderervices;
+    private readonly OrdenServices _orderervices;
     private readonly IMapper _mapper;
-    public OrderController(OrderServices Orderervices, IMapper mapper)
+    public OrderController(OrdenServices Orderervices, IMapper mapper)
     {
         this._orderervices = Orderervices ?? throw new ArgumentNullException(nameof(Orderervices));
         this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -32,7 +32,7 @@ public class OrderController : ControllerBase
     {
         var order = await _orderervices.GetById(id);
 
-        if (order.Id <= 0)
+        if (order.IdOrden <= 0)
             return NotFound();
 
         var dto = _mapper.Map<OrderDTO>(order);
@@ -43,17 +43,17 @@ public class OrderController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add(OrderCreateDTO order)
     {
-        var entity = _mapper.Map<Order>(order);
+        var entity = _mapper.Map<Orden>(order);
         await _orderervices.Add(entity);
         var dto = _mapper.Map<OrderDTO>(entity);
-        return CreatedAtAction(nameof(GetById), new { id = entity.Id }, dto);
+        return CreatedAtAction(nameof(GetById), new { id = entity.IdOrden }, dto);
 
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, Order order)
+    public async Task<IActionResult> Update(int id, Orden order)
     {
-        if (id != order.Id)
+        if (id != order.IdOrden)
         return BadRequest();
 
         var existingOrder = await _orderervices.GetById(id);

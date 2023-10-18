@@ -7,12 +7,13 @@ namespace TostiElotes.Domain.Dtos
 {
     public class OrderDTO
     {
-        public int Id { get; set; }
-        public string? CustomerName { get; set; }
-        public string? Address { get; set; }
-        public int Quantity { get; set; }
-        public int IdProduct { get; set; }
-        public int IdUser { get; set; }
+     public int ID_Orden { get; set; }
+    public DateTime Fecha { get; set; }
+    public int ID_Cliente { get; set; }
+    public int ID_Vendedor { get; set; }
+    public string? Estado { get; set; }
+    public string? DireccionEnvio { get; set; }
+    public string? DetallesPago { get; set; }
 
     }
 

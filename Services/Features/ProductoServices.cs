@@ -29,16 +29,16 @@ public class ProductoServices
 
     public async Task Update(Producto productoToUpdate)
     {
-        var Producto = GetById(productoToUpdate.Id);
+        var Producto = await GetById(productoToUpdate.IdProducto);
 
-        if (Producto.Id > 0)
+        if (Producto.IdProducto >= 0)
            await _productoRepository.Update(productoToUpdate);
     }
 
     public async Task Delete(int id)
     {
-        var Producto = GetById(id);
-        if (Producto.Id > 0)
+        var Producto = await GetById(id);
+        if (Producto.IdProducto >= 0)
            await _productoRepository.Delete(id);
     }
 }

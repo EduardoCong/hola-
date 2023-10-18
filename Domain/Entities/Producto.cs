@@ -5,13 +5,15 @@ namespace TostiElotes.Domain.Entities;
 
 public partial class Producto
 {
-    public int Id { get; set; }
+    public int IdProducto { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string? Nombre { get; set; }
 
-    public string Description { get; set; } = null!;
+    public string? Descripción { get; set; }
 
-    public decimal Price { get; set; }
+    public decimal? Precio { get; set; }
 
-    public virtual ICollection<Order> Order { get; set; } = new List<Order>();
+    public int? Stock { get; set; }
+
+    public string? Imagen { get; set; }
 }

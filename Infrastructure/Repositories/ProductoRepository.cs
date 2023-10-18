@@ -2,13 +2,12 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using TostiElotes.Domain.Entities;
 using TostiElotes.Infrastructure.Data;
-
 namespace TostiElotes.Infrastructure.Repositories
 {
     public class ProductoRepository
     {
-        private readonly ContexdataDB _context;
-        public ProductoRepository(ContexdataDB context)
+        private readonly SnackappDbContext _context;
+        public ProductoRepository(SnackappDbContext context)
         {
             this._context = context  ?? throw new ArgumentNullException(nameof(context));;
         }
@@ -19,7 +18,7 @@ namespace TostiElotes.Infrastructure.Repositories
         }
         public  async Task<Producto> GetById(int id)
         {
-            var producto = await _context.Productos.FirstOrDefaultAsync(product => product.Id == id);
+            var producto = await _context.Productos.FirstOrDefaultAsync(product => product.IdProducto == id);
             return producto ?? new Producto();
         }
         public async Task Add(Producto producto)
@@ -29,7 +28,7 @@ namespace TostiElotes.Infrastructure.Repositories
         }
         public async Task Update(Producto updatedProducto)
         {
-            var producto = await _context.Productos.FirstOrDefaultAsync(producto => producto.Id == updatedProducto.Id);
+            var producto = await _context.Productos.FirstOrDefaultAsync(producto => producto.IdProducto == updatedProducto.IdProducto);
             if (producto != null){
                 _context.Entry(producto).CurrentValues.SetValues(updatedProducto);
                 await _context.SaveChangesAsync();
@@ -37,7 +36,7 @@ namespace TostiElotes.Infrastructure.Repositories
         }
         public async Task Delete(int id)
         {
-            var producto = await _context.Productos.FirstOrDefaultAsync(producto => producto.Id == id);
+            var producto = await _context.Productos.FirstOrDefaultAsync(producto => producto.IdProducto == id);
            if(producto != null){
             _context.Productos.Remove(producto);
             await _context.SaveChangesAsync();
@@ -45,3 +44,5 @@ namespace TostiElotes.Infrastructure.Repositories
         }
     }
 }
+
+

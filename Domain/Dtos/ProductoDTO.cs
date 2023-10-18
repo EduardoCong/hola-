@@ -7,9 +7,13 @@ namespace TostiElotes.Domain.Dtos
 {
     public class ProductoDTO
     {
-         public int Id { get; set; }
-        public  string Name { get; set; } = null!;
-        public  string Description { get; set; } = null!;
-        public double Price { get; set; }
+        public int ID_Producto { get; set; }
+        public string? Nombre { get; set; } = null!;
+        public string? Descripcion { get; set; }
+        public decimal Precio { get; set; }  
+        public int Stock { get; set; }
+        public bool Disponibilidad { get; set; }
+        public string? Imagen { get; set; }
+
     }
 }

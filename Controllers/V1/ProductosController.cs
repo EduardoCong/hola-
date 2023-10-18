@@ -46,13 +46,13 @@ public class ProductosController : ControllerBase
 
       await _productoServices.Add(entity);
       var dto = _mapper.Map<ProductoDTO>(entity);
-      return CreatedAtAction(nameof(GetById), new { id = entity.Id }, dto);
+      return CreatedAtAction(nameof(GetById), new { id = entity.IdProducto}, dto);
   }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, Producto producto)
+    public async Task<IActionResult> Update(int id, ProductoCreateDTO producto)
     {
-            if (id != producto.Id)
+            if (id != producto.ID_Producto)
                 return BadRequest();
 
             var existingProducto = await _productoServices.GetById(id);
