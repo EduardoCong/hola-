@@ -9,7 +9,8 @@ using TostiElotes.Domain.Entities;
 
 namespace TostiElotes.Services.Mappings
 {
-   public class ResponseMappingProfile : Profile
+
+    public class ResponseMappingProfile : Profile
     {
         public ResponseMappingProfile()
         {
@@ -20,7 +21,7 @@ namespace TostiElotes.Services.Mappings
             // Mapeo entre Orden y OrdenDTO
             CreateMap<Orden, OrderDTO>()
                 .ForMember(dest => dest.ID_Orden, opt => opt.MapFrom(src => src.IdOrden));
-                
+
             // Mapeo entre Cliente y ClienteDTO
             CreateMap<Cliente, ClienteDTO>()
                 .ForMember(dest => dest.ID_Cliente, opt => opt.MapFrom(src => src.IdCliente));
@@ -28,7 +29,6 @@ namespace TostiElotes.Services.Mappings
             // Mapeo entre DetalleOrden y DetalleOrdenDTO
             CreateMap<DetalleOrden, DetalleOrdenDTO>()
                 .ForMember(dest => dest.ID_Detalle, opt => opt.MapFrom(src => src.IdDetalle));
-            
 
             // Mapeo entre Vendedor y VendedorDTO
             CreateMap<Vendedor, VendedorDTO>()
@@ -36,3 +36,4 @@ namespace TostiElotes.Services.Mappings
         }
     }
 }
+

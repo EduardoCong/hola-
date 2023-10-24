@@ -7,7 +7,7 @@ public partial class Orden
 {
     public int IdOrden { get; set; }
 
-    public byte[] Fecha { get; set; } = null!;
+    public DateTime? Fecha { get; set; }
 
     public int? IdCliente { get; set; }
 
@@ -16,4 +16,10 @@ public partial class Orden
     public string? DireccionEnvio { get; set; }
 
     public string? DetallesPago { get; set; }
+
+    public virtual ICollection<DetalleOrden> DetallesOrden { get; set; } = new List<DetalleOrden>();
+
+    public virtual Cliente? IdClienteNavigation { get; set; }
+
+    public virtual Vendedor? IdVendedorNavigation { get; set; }
 }

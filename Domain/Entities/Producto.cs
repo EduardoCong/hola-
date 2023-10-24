@@ -16,4 +16,6 @@ public partial class Producto
     public int? Stock { get; set; }
 
     public string? Imagen { get; set; }
+
+    public virtual ICollection<DetalleOrden> DetallesOrden { get; set; } = new List<DetalleOrden>();
 }

@@ -14,4 +14,8 @@ public partial class DetalleOrden
     public int? Cantidad { get; set; }
 
     public decimal? PrecioTotal { get; set; }
+
+    public virtual Orden? IdOrdenNavigation { get; set; }
+
+    public virtual Producto? IdProductoNavigation { get; set; }
 }

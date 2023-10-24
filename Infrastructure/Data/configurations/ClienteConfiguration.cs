@@ -9,11 +9,8 @@ namespace TostiElotes.Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
             builder.ToTable("Clientes");
-            builder.HasKey(e => e.IdCliente).HasName("PK__Clientes__E005FBFF8BAA9880");
+             builder.HasKey(e => e.IdCliente).HasName("PK__Clientes__D59466427BFF81D3");
 
-            builder.Property(e => e.IdCliente)
-                .ValueGeneratedNever()
-                .HasColumnName("ID_Cliente");
             builder.Property(e => e.Apellido)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -32,9 +29,7 @@ namespace TostiElotes.Infrastructure.Data.Configurations
                 .IsUnicode(false);
             builder.Property(e => e.Telefono)
                 .HasMaxLength(15)
-                .IsUnicode(false);
-
-        }
+                .IsUnicode(false);        }
 
     }
 }

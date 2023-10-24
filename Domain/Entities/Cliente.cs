@@ -20,4 +20,6 @@ public partial class Cliente
     public string? CorreoElectronico { get; set; }
 
     public string? Contraseña { get; set; }
+
+    public virtual ICollection<Orden> Orden { get; set; } = new List<Orden>();
 }

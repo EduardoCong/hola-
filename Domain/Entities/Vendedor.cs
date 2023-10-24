@@ -14,4 +14,6 @@ public partial class Vendedor
     public string? CorreoElectronico { get; set; }
 
     public string? Contraseña { get; set; }
+
+    public virtual ICollection<Orden> Orden { get; set; } = new List<Orden>();
 }

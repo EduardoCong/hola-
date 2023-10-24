@@ -9,11 +9,8 @@ namespace TostiElotes.Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Vendedor> builder)
         {
             builder.ToTable("Vendedores");
-            builder.HasKey(e => e.IdVendedor).HasName("PK__Vendedor__2B2A0A45D632271D");
+             builder.HasKey(e => e.IdVendedor).HasName("PK__Vendedor__16D6C7CA71D08E23");
 
-            builder.Property(e => e.IdVendedor)
-                .ValueGeneratedNever()
-                .HasColumnName("ID_Vendedor");
             builder.Property(e => e.Contraseña)
                 .HasMaxLength(255)
                 .IsUnicode(false);

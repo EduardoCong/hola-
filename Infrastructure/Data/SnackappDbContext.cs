@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using TostiElotes.Domain.Entities;
 using TostiElotes.Infrastructure.Data.Configurations;
 
-namespace TostiElotes.Infrastructure.Data;
+namespace TostiElotes.Domain.Entities;
 
 public partial class SnackappDbContext : DbContext
 {
@@ -30,10 +29,12 @@ public partial class SnackappDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ClienteConfiguration());
-        modelBuilder.ApplyConfiguration(new ProductoConfiguration());
         modelBuilder.ApplyConfiguration(new DetalleOrdenConfiguration());
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductoConfiguration());
         modelBuilder.ApplyConfiguration(new VendedorConfiguration());
+
+
         OnModelCreatingPartial(modelBuilder);
     }
 
