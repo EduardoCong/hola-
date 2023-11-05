@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using TostiElotes.Domain.Entities;
 using TostiElotes.Infrastructure.Repositories;
 
@@ -6,10 +7,12 @@ namespace TostiElotes.Services.Features;
 public class OrdenServices
 {
     private readonly OrdenRepository _ordenRepository;
+    private readonly SnackappDbContext _context;
 
-    public OrdenServices(OrdenRepository ordenRepository)
+    public OrdenServices(OrdenRepository ordenRepository, SnackappDbContext context)
     {
         this._ordenRepository = ordenRepository;
+        this._context = context;
     }
 
     public async Task<IEnumerable<Orden>> GetAll()
@@ -34,6 +37,15 @@ public class OrdenServices
         if (orden.IdOrden >= 0)
             await _ordenRepository.Update(ordenToUpdate);
     }
+     public async Task<List<Orden>> GetOrdersByClienteId(int clienteId)
+        {
+            // Filtra las órdenes por el ID del cliente
+            var ordenes = await _context.Orden
+                .Where(o => o.IdCliente == clienteId)
+                .ToListAsync();
+
+            return ordenes;
+        }
 
     public async Task Delete(int id)
     {

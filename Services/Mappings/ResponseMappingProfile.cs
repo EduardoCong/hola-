@@ -14,9 +14,11 @@ namespace TostiElotes.Services.Mappings
     {
         public ResponseMappingProfile()
         {
+
             // Mapeo entre Producto y ProductoDTO
             CreateMap<Producto, ProductoDTO>()
-                .ForMember(dest => dest.ID_Producto, opt => opt.MapFrom(src => src.IdProducto));
+                .ForMember(dest => dest.ID_Producto, opt => opt.MapFrom(src => src.IdProducto))
+                .ForMember(dest => dest.Precio, opt => opt.MapFrom(src => src.Precio));
 
             // Mapeo entre Orden y OrdenDTO
             CreateMap<Orden, OrderDTO>()
@@ -24,11 +26,15 @@ namespace TostiElotes.Services.Mappings
 
             // Mapeo entre Cliente y ClienteDTO
             CreateMap<Cliente, ClienteDTO>()
-                .ForMember(dest => dest.ID_Cliente, opt => opt.MapFrom(src => src.IdCliente));
+            .ForMember(dest => dest.ID_Cliente, opt => opt.MapFrom(src => src.IdCliente));
 
             // Mapeo entre DetalleOrden y DetalleOrdenDTO
             CreateMap<DetalleOrden, DetalleOrdenDTO>()
-                .ForMember(dest => dest.ID_Detalle, opt => opt.MapFrom(src => src.IdDetalle));
+                .ForMember(dest => dest.ID_Detalle, opt => opt.MapFrom(src => src.IdDetalle))
+                .ForMember(dest => dest.ID_Orden, opt => opt.MapFrom(src => src.IdOrden))
+                .ForMember(dest => dest.ID_Producto, opt => opt.MapFrom(src => src.IdProducto))
+                .ForMember(dest => dest.PrecioTotal, opt => opt.MapFrom(src => src.PrecioTotal));
+
 
             // Mapeo entre Vendedor y VendedorDTO
             CreateMap<Vendedor, VendedorDTO>()

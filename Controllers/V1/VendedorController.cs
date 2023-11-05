@@ -58,23 +58,25 @@ namespace TostiElotes.Controllers.V1
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, VendedorCreateDTO vendedor)
         {
-            if (id != vendedor.ID_Vendedor)
-                return BadRequest();
+            if (vendedor == null)
+                return BadRequest("vendedor no válido.");
 
-            var existingVendedor = await _vendedorServices.GetById(id);
+            var existingvendedor = await _vendedorServices.GetById(id);
 
-            if (existingVendedor == null)
+            if (existingvendedor == null)
                 return NotFound();
 
-            _mapper.Map(vendedor, existingVendedor);
+            // Realiza el mapeo de vendedor a existingvendedor
+            _mapper.Map(vendedor, existingvendedor);
 
-            await _vendedorServices.Update(existingVendedor);
+            await _vendedorServices.Update(existingvendedor);
 
-            var updatedVendedor = await _vendedorServices.GetById(id);
-            var updatedVendedorDto = _mapper.Map<VendedorDTO>(updatedVendedor);
+            // Opcional: mapea el vendedor actualizado a DTO si es necesario
+            var updatedvendedorDto = _mapper.Map<VendedorDTO>(existingvendedor);
 
-            return Ok(updatedVendedorDto);
+            return Ok(updatedvendedorDto);
         }
+
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)

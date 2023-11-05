@@ -9,15 +9,9 @@ namespace TostiElotes.Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<Producto> builder)
         {
             builder.ToTable("Productos");
-            builder.HasKey(e => e.IdProducto).HasName("PK__Producto__098892107E803695");
+            builder.HasKey(e => e.IdProducto).HasName("PK__Producto__09889210A9C7F96E");
 
-            builder.Property(e => e.Descripción).HasColumnType("text");
-            builder.Property(e => e.Imagen)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            builder.Property(e => e.Nombre)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            builder.Property(e => e.Nombre).HasMaxLength(255);
             builder.Property(e => e.Precio).HasColumnType("decimal(10, 2)");
         }
 

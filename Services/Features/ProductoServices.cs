@@ -21,6 +21,20 @@ public class ProductoServices
     {
         return await _productoRepository.GetById(id);
     }
+    public async Task<List<Producto>> GetProductosById(List<int?> idProductos)
+{
+    var productos = new List<Producto>();
+    foreach (var id in idProductos)
+    {
+        var producto = await _productoRepository.GetById(id);
+        if (producto != null)
+        {
+            productos.Add(producto);
+        }
+    }
+    return productos;
+}
+
 
     public async Task Add(Producto producto)
     {

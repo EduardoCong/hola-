@@ -16,7 +16,7 @@ namespace TostiElotes.Infrastructure.Repositories
             var productos = await _context.Productos.ToListAsync();
             return productos;
         }
-        public  async Task<Producto> GetById(int id)
+        public  async Task<Producto> GetById(int? id)
         {
             var producto = await _context.Productos.FirstOrDefaultAsync(product => product.IdProducto == id);
             return producto ?? new Producto();

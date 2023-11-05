@@ -10,7 +10,7 @@ namespace TostiElotes.Controllers.V1;
 public class ProductosController : ControllerBase
 {
     private readonly ProductoServices _productoServices;
-     private readonly IMapper _mapper;
+    private readonly IMapper _mapper;
     public ProductosController(ProductoServices productoServices, IMapper mapper)
     {
         this._productoServices = productoServices ?? throw new ArgumentNullException(nameof(productoServices));
@@ -21,54 +21,60 @@ public class ProductosController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var producto = await _productoServices.GetAll();
-        var productoDtos = _mapper.Map<IEnumerable<ProductoDTO>>(producto); 
-        
+        var productoDtos = _mapper.Map<IEnumerable<ProductoDTO>>(producto);
+
         return Ok(productoDtos);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
-         var producto = await _productoServices.GetById(id);
+        var producto = await _productoServices.GetById(id);
 
         if (producto == null)
             return NotFound();
 
-        var dto = _mapper.Map<ProductoDTO>(producto); 
+        var dto = _mapper.Map<ProductoDTO>(producto);
 
         return Ok(dto);
     }
 
     [HttpPost]
     public async Task<IActionResult> Add(ProductoCreateDTO producto)
-  {
-      var entity = _mapper.Map<Producto>(producto);
+    {
+        var entity = _mapper.Map<Producto>(producto);
 
-      await _productoServices.Add(entity);
-      var dto = _mapper.Map<ProductoDTO>(entity);
-      return CreatedAtAction(nameof(GetById), new { id = entity.IdProducto}, dto);
-  }
+        await _productoServices.Add(entity);
+
+
+        var dto = _mapper.Map<ProductoDTO>(entity);
+
+        return CreatedAtAction(nameof(GetById), new { id = dto.ID_Producto }, dto);
+    }
+
 
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id, ProductoCreateDTO producto)
     {
-            if (id != producto.ID_Producto)
-                return BadRequest();
+        if (producto == null)
+            return BadRequest("producto no válido.");
 
-            var existingProducto = await _productoServices.GetById(id);
+        var existingproducto = await _productoServices.GetById(id);
 
-            if (existingProducto == null)
-                return NotFound();
+        if (existingproducto == null)
+            return NotFound();
 
-            _mapper.Map(producto, existingProducto);
+        // Realiza el mapeo de producto a existingproducto
+        _mapper.Map(producto, existingproducto);
 
-            await _productoServices.Update(existingProducto);
+        await _productoServices.Update(existingproducto);
 
-            var updatedProducto = await _productoServices.GetById(id);
-            var updatedProductoDto = _mapper.Map<ProductoDTO>(updatedProducto);
+        // Opcional: mapea el producto actualizado a DTO si es necesario
+        var updatedproductoDto = _mapper.Map<ProductoDTO>(existingproducto);
 
-            return Ok(updatedProductoDto);
-        }
+        return Ok(updatedproductoDto);
+    }
+
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)

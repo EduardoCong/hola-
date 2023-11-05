@@ -7,7 +7,6 @@ namespace TostiElotes.Domain.Dtos
 {
     public class VendedorCreateDTO
     {
-        public int ID_Vendedor { get; set; }
         public string? Nombre { get; set; }
         public string? Descripcion { get; set; }
         public string? CorreoElectronico { get; set; }

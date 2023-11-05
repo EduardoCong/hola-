@@ -12,6 +12,7 @@ namespace TostiElotes.Controllers.V1
     public class ClientesController : ControllerBase
     {
         private readonly ClienteServices _clienteServices;
+
         private readonly IMapper _mapper;
 
         public ClientesController(ClienteServices clienteServices, IMapper mapper)
@@ -56,23 +57,25 @@ namespace TostiElotes.Controllers.V1
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, ClienteCreateDTO cliente)
         {
-            if (id != cliente.ID_Cliente)
-                return BadRequest();
+            if (cliente == null)
+                return BadRequest("Cliente no válido.");
 
             var existingCliente = await _clienteServices.GetById(id);
 
             if (existingCliente == null)
                 return NotFound();
 
+            // Realiza el mapeo de cliente a existingCliente
             _mapper.Map(cliente, existingCliente);
 
             await _clienteServices.Update(existingCliente);
 
-            var updatedCliente = await _clienteServices.GetById(id);
-            var updatedClienteDto = _mapper.Map<ClienteDTO>(updatedCliente);
+            // Opcional: mapea el cliente actualizado a DTO si es necesario
+            var updatedClienteDto = _mapper.Map<ClienteDTO>(existingCliente);
 
             return Ok(updatedClienteDto);
         }
+
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
@@ -80,5 +83,6 @@ namespace TostiElotes.Controllers.V1
             await _clienteServices.Delete(id);
             return NoContent();
         }
+
     }
 }
