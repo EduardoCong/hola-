@@ -53,6 +53,22 @@ namespace TostiElotes.Controllers.V1
                 detalleOrdenEntity.IdProducto = detalleOrdenCreate.ID_Producto;
                 await _detallesOrdenServices.Add(detalleOrdenEntity);
                 detalleOrdenDto = _mapper.Map<DetalleOrdenDTO>(detalleOrdenEntity);
+
+                // Resta la cantidad de productos del stock correspondiente
+                var producto = await _productoServices.GetById(detalleOrdenCreate.ID_Producto);
+                if (producto != null)
+                {
+                    if (producto.Stock >= detalleOrdenCreate.Cantidad)
+                    {
+                        producto.Stock -= detalleOrdenCreate.Cantidad;
+                        await _productoServices.Update(producto); // Actualiza el stock
+                    }
+                    else
+                    {
+                        // Maneja el caso en el que no hay suficiente stock
+                        return BadRequest("Stock insuficiente para este producto.");
+                    }
+                }
             }
 
             var response = new { Order = orderDto, DetalleOrden = detalleOrdenDto };
@@ -240,7 +256,7 @@ namespace TostiElotes.Controllers.V1
             var detallesOrdenDto = detallesOrden.Select(detalle => _mapper.Map<DetalleOrdenDTO>(detalle)).ToList();
             return Ok(detallesOrdenDto);
         }
-    
+
     }
 
 
