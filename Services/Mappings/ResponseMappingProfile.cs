@@ -35,6 +35,12 @@ namespace TostiElotes.Services.Mappings
                 .ForMember(dest => dest.ID_Producto, opt => opt.MapFrom(src => src.IdProducto))
                 .ForMember(dest => dest.PrecioTotal, opt => opt.MapFrom(src => src.PrecioTotal));
 
+            // Mapeo entre EstadoEntrega y EstadoEntregaDTO
+            CreateMap<EstadoEntrega, EstadoEsntregaDTO>()
+                .ForMember(dest => dest.IdEstado, opt => opt.MapFrom(src => src.IdEstado))
+                .ForMember(dest => dest.IdOrden, opt => opt.MapFrom(src => src.IdOrden))
+                .ForMember(dest => dest.Estado, opt => opt.MapFrom(src => src.Estado))
+                .ForMember(dest => dest.Comentarios, opt => opt.MapFrom(src => src.Comentarios));
 
             // Mapeo entre Vendedor y VendedorDTO
             CreateMap<Vendedor, VendedorDTO>()

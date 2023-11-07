@@ -38,6 +38,10 @@ namespace TostiElotes.Services.Features
             await _detalleOrdenRepository.Add(detalleOrden);
         }
 
+        public async Task<DetalleOrden> GetById(int id)
+        {
+            return await _detalleOrdenRepository.GetById(id);
+        }
         public async Task DeleteByOrderId(int orderId)
         {
             // Aquí obtén los detalles de la orden que tienen el orderId proporcionado y elimínalos

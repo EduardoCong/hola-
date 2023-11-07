@@ -21,13 +21,15 @@ namespace TostiElotes.Controllers.V1
         private readonly IMapper _mapper;
         private readonly ProductoServices _productoServices;
         private readonly ClienteServices _clienteServices;
+        private readonly EstadoEntregaServices _estadoEntrega;
 
-        public OrdenController(OrdenServices orderServices, DetalleOrdenServices detallesOrdenServices, IMapper mapper, ProductoServices productoServices, ClienteServices clienteServices)
+        public OrdenController(OrdenServices orderServices, DetalleOrdenServices detallesOrdenServices, IMapper mapper, ProductoServices productoServices, ClienteServices clienteServices, EstadoEntregaServices estadoEntrega)
         {
             _orderServices = orderServices ?? throw new ArgumentNullException(nameof(orderServices));
             _detallesOrdenServices = detallesOrdenServices ?? throw new ArgumentNullException(nameof(detallesOrdenServices));
             _productoServices = productoServices ?? throw new ArgumentNullException(nameof(productoServices));
             _clienteServices = clienteServices ?? throw new ArgumentNullException(nameof(clienteServices));
+            _estadoEntrega = estadoEntrega ?? throw new ArgumentNullException(nameof(estadoEntrega));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -54,10 +56,13 @@ namespace TostiElotes.Controllers.V1
                 await _detallesOrdenServices.Add(detalleOrdenEntity);
                 detalleOrdenDto = _mapper.Map<DetalleOrdenDTO>(detalleOrdenEntity);
 
-                // Resta la cantidad de productos del stock correspondiente
+                // Calcula el precio total del detalle de la orden
                 var producto = await _productoServices.GetById(detalleOrdenCreate.ID_Producto);
                 if (producto != null)
                 {
+                    detalleOrdenDto.PrecioTotal = detalleOrdenCreate.Cantidad * producto.Precio;
+
+                    // Resta la cantidad de productos del stock correspondiente
                     if (producto.Stock >= detalleOrdenCreate.Cantidad)
                     {
                         producto.Stock -= detalleOrdenCreate.Cantidad;
@@ -71,77 +76,50 @@ namespace TostiElotes.Controllers.V1
                 }
             }
 
-            var response = new { Order = orderDto, DetalleOrden = detalleOrdenDto };
+            // Crear un nuevo estado de entrega y asociarlo a la orden
+            var estadoEntrega = new EstadoEntrega
+            {
+                IdOrden = orderEntity.IdOrden,
+                Estado = "En proceso", // Puedes establecer el estado inicial que desees
+                Comentarios = "Espero que le guste 😊"
+            };
+
+            await _estadoEntrega.Add(estadoEntrega); // Reemplaza ".Estado" con el método apropiado
+
+            var response = new
+            {
+                Order = new
+                {
+                    orderDto.ID_Orden,
+                    orderDto.Fecha,
+                    orderDto.IdCliente,
+                    orderDto.IdVendedor,
+                    orderDto.DireccionEnvio,
+                    orderDto.DetallesPago,
+                    DetalleOrden = detalleOrdenDto // Agrega el detalleOrdenDto
+                }
+            };
             return Ok(response);
         }
+
+
+
 
         [HttpGet("Order")]
         public async Task<IActionResult> GetAllOrders()
         {
-            var orders = await _orderServices.GetAll();
-            var orderDtos = _mapper.Map<IEnumerable<OrderDTO>>(orders);
+            var orders = await _orderServices.GetAllIncludingDetails(); // Método personalizado para cargar detalles de la orden
+            var orderDtos = orders.Select(order =>
+            {
+                var orderDto = _mapper.Map<OrderDTO>(order);
+                orderDto.DetalleOrden = order.DetallesOrden.Select(detalle => _mapper.Map<DetalleOrdenDTO>(detalle)).ToList();
+                return orderDto;
+            }).ToList();
+
             return Ok(orderDtos);
         }
 
-        private decimal CalculateTotalPrice(List<DetalleOrdenDTO> detalles, List<Producto> productos)
-        {
-            decimal totalPrice = 0;
 
-            if (detalles != null && detalles.Any())
-            {
-                foreach (var detalle in detalles)
-                {
-                    var producto = productos.FirstOrDefault(p => p.IdProducto == detalle.ID_Producto);
-
-                    if (producto != null)
-                    {
-                        totalPrice += detalle.Cantidad * producto.Precio;
-                    }
-                }
-            }
-
-            return totalPrice;
-        }
-
-        // [HttpGet("Order/{id:int}")]
-        // public async Task<IActionResult> GetOrderById(int id)
-        // {
-        //     var order = await _orderServices.GetById(id);
-        //     if (order == null)
-        //         return NotFound();
-        //     var detallez = await _detallesOrdenServices.GetByOrderId(id);
-        //     // Obtiene los detalles de la orden correspondientes a la orden principal
-        //     var detallesOrden = await _detallesOrdenServices.GetByOrderId(id);
-        //     var orderDto = _mapper.Map<OrderDTO>(order);
-
-        //     if (detallesOrden != null && detallesOrden.Any())
-        //     {
-        //         // Obtén la lista de ID_Producto de los detalles de la orden
-        //         var idProductos = detallesOrden.Select(detalle => detalle.IdProducto).ToList();
-
-        //         // Supongamos que tienes una función para cargar los productos por lista de ID_Producto
-        //         var productos = await _productoServices.GetProductosById(idProductos);
-
-        //         // Mapea los detalles de la orden a sus respectivos DTO
-        //         var detallesOrdenDto = detallesOrden.Select(detalle => _mapper.Map<DetalleOrdenDTO>(detalle)).ToList();
-
-        //         // Calcula el precio total de los detalles de la orden
-        //         decimal totalPrice = CalculateTotalPrice(detallesOrdenDto, productos);
-
-        //         // Crea una nueva instancia de DetalleOrdenDTO y establece el PrecioTotal
-        //         var detalleDto = new DetalleOrdenDTO
-        //         {
-        //             PrecioTotal = totalPrice
-        //         };
-
-        //         // Agrega el detalle de orden calculado al principio de la lista
-        //         detallesOrdenDto.Insert(1, detalleDto);
-        //         // Asigna la lista de detalles ordenada al DTO de la orden
-        //         orderDto.DetalleOrden = detallesOrdenDto;
-        //     }
-
-        //     return Ok(orderDto);
-        // }
 
         [HttpGet("Order/{id:int}")]
         public async Task<IActionResult> GetOrderById(int id)
@@ -181,7 +159,6 @@ namespace TostiElotes.Controllers.V1
                 }
 
                 // Asigna la lista de detalles ordenada al DTO de la orden
-                orderDto.DetalleOrden = detallesOrdenDto;
 
                 // Actualiza el precio total en el primer elemento de detallesOrdenDto
                 if (detallesOrdenDto.Any())

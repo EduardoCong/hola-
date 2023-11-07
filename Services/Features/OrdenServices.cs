@@ -14,6 +14,13 @@ public class OrdenServices
         this._ordenRepository = ordenRepository;
         this._context = context;
     }
+    public async Task<List<Orden>> GetAllIncludingDetails()
+    {
+        // Utiliza Include para cargar los detalles de la orden relacionados
+        return await _context.Orden
+            .Include(o => o.DetallesOrden) // Asegúrate de que las relaciones estén definidas en tus modelos
+            .ToListAsync();
+    }
 
     public async Task<IEnumerable<Orden>> GetAll()
     {
@@ -37,15 +44,15 @@ public class OrdenServices
         if (orden.IdOrden >= 0)
             await _ordenRepository.Update(ordenToUpdate);
     }
-     public async Task<List<Orden>> GetOrdersByClienteId(int clienteId)
-        {
-            // Filtra las órdenes por el ID del cliente
-            var ordenes = await _context.Orden
-                .Where(o => o.IdCliente == clienteId)
-                .ToListAsync();
+    public async Task<List<Orden>> GetOrdersByClienteId(int clienteId)
+    {
+        // Filtra las órdenes por el ID del cliente
+        var ordenes = await _context.Orden
+            .Where(o => o.IdCliente == clienteId)
+            .ToListAsync();
 
-            return ordenes;
-        }
+        return ordenes;
+    }
 
     public async Task Delete(int id)
     {

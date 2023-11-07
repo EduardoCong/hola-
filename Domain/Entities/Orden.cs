@@ -19,6 +19,8 @@ public partial class Orden
 
     public virtual ICollection<DetalleOrden> DetallesOrden { get; set; } = new List<DetalleOrden>();
 
+    public virtual ICollection<EstadoEntrega> EstadoEntrega { get; set; } = new List<EstadoEntrega>();
+
     public virtual Cliente? IdClienteNavigation { get; set; }
 
     public virtual Vendedor? IdVendedorNavigation { get; set; }

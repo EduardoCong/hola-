@@ -13,7 +13,7 @@ namespace TostiElotes.Services.Mappings
 
             // Mapeo entre OrdenCreateDTO y Orden
             CreateMap<OrderCreateDTO, Orden>()
-                .ForMember(dest => dest.Fecha, opt => opt.MapFrom(src => src.Fecha));
+                .ForMember(dest => dest.Fecha , opt => opt.MapFrom(src => src.Fecha));
 
 
             // Mapeo entre ClienteCreateDTO y Cliente
@@ -23,6 +23,8 @@ namespace TostiElotes.Services.Mappings
             CreateMap<DetalleOrdenCreateDTO, DetalleOrden>()
             ;
 
+            // Mapeo entre EstadoEntregaCreateDTO y EstadoEntrega
+            CreateMap<EsatdoEntregaCreateDTO, EstadoEntrega>();
 
             // Mapeo entre VendedorCreateDTO y Vendedor
             CreateMap<VendedorCreateDTO, Vendedor>();

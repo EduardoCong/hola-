@@ -22,6 +22,10 @@ builder.Services.AddTransient<DetalleOrdenRepository>();
 builder.Services.AddScoped<VendedorServices>();
 builder.Services.AddTransient<VendedorRepository>();
 
+builder.Services.AddScoped<EstadoEntregaServices>();
+builder.Services.AddTransient<EstadoEntregaRepository>();
+
+
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SnackappDbContext>(
     options => {
