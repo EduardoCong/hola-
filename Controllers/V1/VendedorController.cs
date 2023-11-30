@@ -36,8 +36,8 @@ namespace TostiElotes.Controllers.V1
         {
             var vendedor = await _vendedorServices.GetById(id);
 
-            if (vendedor == null)
-                return NotFound();
+            if (vendedor.IdVendedor == 0)
+                return BadRequest("El vendedor no existe.");
 
             var dto = _mapper.Map<VendedorDTO>(vendedor);
 
@@ -63,8 +63,8 @@ namespace TostiElotes.Controllers.V1
 
             var existingvendedor = await _vendedorServices.GetById(id);
 
-            if (existingvendedor == null)
-                return NotFound();
+            if (existingvendedor.IdVendedor == 0)
+                return BadRequest("vendedor no Existe.");
 
             // Realiza el mapeo de vendedor a existingvendedor
             _mapper.Map(vendedor, existingvendedor);
@@ -81,8 +81,12 @@ namespace TostiElotes.Controllers.V1
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var exstingCliente = await _vendedorServices.GetById(id);
+            if (exstingCliente.IdVendedor == 0)
+                return BadRequest("El Vendedor no existente.");
+
             await _vendedorServices.Delete(id);
-            return NoContent();
+            return Ok("El vendedor eliminado correctamente");
         }
     }
 }

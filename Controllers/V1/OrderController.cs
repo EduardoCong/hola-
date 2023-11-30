@@ -50,6 +50,15 @@ namespace TostiElotes.Controllers.V1
 
             if (detalleOrdenCreate != null)
             {
+                // Obtener el producto
+                var producto = await _productoServices.GetById(detalleOrdenCreate.ID_Producto);
+
+                // Verificar si el producto existe
+                if (producto.IdProducto == 0)
+                {
+                    return BadRequest("El Producto no existe.");
+                }
+
                 var detalleOrdenEntity = _mapper.Map<DetalleOrden>(detalleOrdenCreate);
                 detalleOrdenEntity.IdOrden = orderEntity.IdOrden;
                 detalleOrdenEntity.IdProducto = detalleOrdenCreate.ID_Producto;
@@ -57,22 +66,18 @@ namespace TostiElotes.Controllers.V1
                 detalleOrdenDto = _mapper.Map<DetalleOrdenDTO>(detalleOrdenEntity);
 
                 // Calcula el precio total del detalle de la orden
-                var producto = await _productoServices.GetById(detalleOrdenCreate.ID_Producto);
-                if (producto != null)
-                {
-                    detalleOrdenDto.PrecioTotal = detalleOrdenCreate.Cantidad * producto.Precio;
+                detalleOrdenDto.PrecioTotal = detalleOrdenCreate.Cantidad * producto.Precio;
 
-                    // Resta la cantidad de productos del stock correspondiente
-                    if (producto.Stock >= detalleOrdenCreate.Cantidad)
-                    {
-                        producto.Stock -= detalleOrdenCreate.Cantidad;
-                        await _productoServices.Update(producto); // Actualiza el stock
-                    }
-                    else
-                    {
-                        // Maneja el caso en el que no hay suficiente stock
-                        return BadRequest("Stock insuficiente para este producto.");
-                    }
+                // Resta la cantidad de productos del stock correspondiente
+                if (producto.Stock >= detalleOrdenCreate.Cantidad)
+                {
+                    producto.Stock -= detalleOrdenCreate.Cantidad;
+                    await _productoServices.Update(producto); // Actualiza el stock
+                }
+                else
+                {
+                    // Maneja el caso en el que no hay suficiente stock
+                    return BadRequest("Stock insuficiente para este producto.");
                 }
             }
 
@@ -103,8 +108,6 @@ namespace TostiElotes.Controllers.V1
         }
 
 
-
-
         [HttpGet("Order")]
         public async Task<IActionResult> GetAllOrders()
         {
@@ -125,8 +128,8 @@ namespace TostiElotes.Controllers.V1
         public async Task<IActionResult> GetOrderById(int id)
         {
             var order = await _orderServices.GetById(id);
-            if (order == null)
-                return NotFound();
+            if (order.IdOrden == 0)
+                return BadRequest("La orden no existe.");
 
             // Obtiene los detalles de la orden correspondientes a la orden principal
             var detallesOrden = await _detallesOrdenServices.GetByOrderId(id);
@@ -173,19 +176,34 @@ namespace TostiElotes.Controllers.V1
 
 
         [HttpDelete("Order/{id:int}")]
-        public async Task<IActionResult> DeleteOrder(int id)
+        public async Task<IActionResult> DeleteOrder(int idOrden)
         {
-            await _detallesOrdenServices.DeleteByOrderId(id);
-            await _orderServices.Delete(id);
-            return NoContent();
+            var existingOrder = await _orderServices.GetById(idOrden);
+
+            if (existingOrder.IdOrden == 0)
+            {
+                return BadRequest("La orden no existe.");
+            }
+            else
+            {
+                // Elimina los detalles de orden correspondientes a la orden principal
+                await _detallesOrdenServices.DeleteByOrderId(existingOrder.IdOrden);
+
+                // Elimina la orden principal
+                await _orderServices.Delete(idOrden);
+
+                return Ok("La orden se ha eliminado correctamente");
+            }
         }
 
+
+
         [HttpGet("OrdenesPorCliente")]
-        public async Task<IActionResult> GetOrdersByClienteId(int clienteId)
+        public async Task<IActionResult> GetOrdersByClienteId(int IdCliente)
         {
             // Primero, verifica si el cliente existe
-            var cliente = await _clienteServices.GetById(clienteId);
-            if (cliente == null)
+            var cliente = await _clienteServices.GetById(IdCliente);
+            if (cliente.IdCliente == 0)
             {
                 return NotFound("Cliente no encontrado");
             }
@@ -204,7 +222,7 @@ namespace TostiElotes.Controllers.V1
             };
 
             // Obtiene las órdenes del cliente por su ID
-            var ordenes = await _orderServices.GetOrdersByClienteId(clienteId);
+            var ordenes = await _orderServices.GetOrdersByClienteId(IdCliente);
 
             // Proyecta cada orden en el nuevo formato
             foreach (var orden in ordenes)
@@ -225,6 +243,7 @@ namespace TostiElotes.Controllers.V1
 
             return Ok(result);
         }
+        
         // Métodos para manejar detalles de órdenes
         [HttpGet("DetallesOrden")]
         public async Task<IActionResult> GetAllOrderDetails()

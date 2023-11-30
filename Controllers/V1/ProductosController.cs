@@ -31,8 +31,8 @@ public class ProductosController : ControllerBase
     {
         var producto = await _productoServices.GetById(id);
 
-        if (producto == null)
-            return NotFound();
+        if (producto.IdProducto == 0)
+            return BadRequest("El producto no Existe.");
 
         var dto = _mapper.Map<ProductoDTO>(producto);
 
@@ -61,8 +61,8 @@ public class ProductosController : ControllerBase
 
         var existingproducto = await _productoServices.GetById(id);
 
-        if (existingproducto == null)
-            return NotFound();
+        if (existingproducto.IdProducto == 0)
+            return BadRequest("El producto no Existe.");
 
         // Realiza el mapeo de producto a existingproducto
         _mapper.Map(producto, existingproducto);
@@ -79,7 +79,11 @@ public class ProductosController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
+        var exstingCliente = await _productoServices.GetById(id);
+        if (exstingCliente.IdProducto == 0)
+            return BadRequest("El producto no existente.");
+
         await _productoServices.Delete(id);
-        return NoContent();
+        return Ok("El producto eliminado correctamente");
     }
 }

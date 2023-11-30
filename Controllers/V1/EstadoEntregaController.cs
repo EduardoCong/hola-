@@ -35,8 +35,9 @@ public class EstadoEntregaController : ControllerBase
     public async Task<ActionResult> GetEstadoEntregaByOrden(int idOrden)
     {
         var estadoEntrega = await _context.GetById(idOrden);
-        if (estadoEntrega == null)
-            return NotFound();
+        if (estadoEntrega.IdEstado == 0)
+            return BadRequest("La orden no existe.");
+        ;
 
         var dto = _mapper.Map<EstadoEsntregaDTO>(estadoEntrega);
 
@@ -49,19 +50,28 @@ public class EstadoEntregaController : ControllerBase
         // Buscar el EstadoEntrega por el ID de la orden
         var estadoEntrega = await _context.GetById(idOrden);
 
-        if (estadoEntrega == null)
+        if (estadoEntrega.IdOrden == 0)
         {
-            return NotFound(); // Devolver 404 Not Found si no se encuentra el EstadoEntrega
+            return BadRequest("La orden no existe.");
         }
+        else
+        {
+            if (estadoEntrega.Estado != "Enviado")
+            {
+                // Actualiza el estado de entrega a "enviado"
+                estadoEntrega.Estado = "Enviado";
+                estadoEntrega.Comentarios = comentarios;
 
-        // Actualiza el estado de entrega a "enviado"
-        estadoEntrega.Estado = "enviado";
-        estadoEntrega.Comentarios = comentarios;
+                // Actualiza el EstadoEntrega en la base de datos
+                await _context.Update(estadoEntrega);
 
-        // Actualiza el EstadoEntrega en la base de datos
-        await _context.Update(estadoEntrega);
-
-        return Ok("El pedido se ha entregado."); // Devuelve un mensaje de éxito
+                return Ok("El pedido se ha entregado."); // Devuelve un mensaje de éxito
+            }
+            else
+            {
+                return BadRequest("El pedido ya se encuentra entregado."); // Devuelve un mensaje de éxito
+            }
+        }
     }
 
 

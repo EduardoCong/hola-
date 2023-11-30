@@ -35,8 +35,8 @@ namespace TostiElotes.Controllers.V1
         {
             var cliente = await _clienteServices.GetById(id);
 
-            if (cliente == null)
-                return NotFound();
+            if (cliente.IdCliente == 0)
+                return BadRequest("No se encontro el usuario");
 
             var dto = _mapper.Map<ClienteDTO>(cliente);
 
@@ -62,8 +62,8 @@ namespace TostiElotes.Controllers.V1
 
             var existingCliente = await _clienteServices.GetById(id);
 
-            if (existingCliente == null)
-                return NotFound();
+            if (existingCliente.IdCliente == 0)
+                return BadRequest("Cliente no existente.");
 
             // Realiza el mapeo de cliente a existingCliente
             _mapper.Map(cliente, existingCliente);
@@ -80,8 +80,12 @@ namespace TostiElotes.Controllers.V1
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var exstingCliente = await _clienteServices.GetById(id);
+            if (exstingCliente.IdCliente == 0)
+                return BadRequest("Cliente no existente.");
+
             await _clienteServices.Delete(id);
-            return NoContent();
+            return Ok("Cliente eliminado correctamente" );
         }
 
     }
