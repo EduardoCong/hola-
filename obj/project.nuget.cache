@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WHd6hJ8eJVyAx6rZ09VPX1+qoV4Ix4duzXFX24fRlHH8q0n4Vub6y4kkLwl7DJNUD+2BKXkDIjoiaOldR7PMLg==",
+  "dgSpecHash": "AfmkCbgTfc2W1u8NrkzzEPaeZE9Twu8drE/78h1NUvxXgTIPhCFdphrSuVyinSFVoDIKWoScNj7nzQmJBP02Sw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\anton\\Desktop\\Proyectos\\App web\\My first API\\API de SnackApp\\Order\\TostiElotes\\TostiElotes\\TostiElotes.csproj",
+  "projectFilePath": "C:\\Users\\anton\\Desktop\\Proyectos\\App web\\My first API\\New api Snackapp\\TostiElotes\\TostiElotes.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\anton\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

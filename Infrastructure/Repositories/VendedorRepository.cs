@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using TostiElotes.Domain.Entities;
 using TostiElotes.Infrastructure.Data;
@@ -7,49 +6,66 @@ namespace TostiElotes.Infrastructure.Repositories
 {
     public class VendedorRepository
     {
-        private readonly SnackappDbContext _context;
 
+        private readonly SnackappDbContext _context;
         public VendedorRepository(SnackappDbContext context)
         {
             this._context = context ?? throw new ArgumentNullException(nameof(context));
-        }
 
+        }
         public async Task<IEnumerable<Vendedor>> GetAll()
         {
-            var vendedores = await _context.Vendedores.ToListAsync();
-            return vendedores;
+            var cliente = await _context.Vendedores.ToListAsync();
+            return cliente;
         }
-
         public async Task<Vendedor> GetById(int id)
         {
-            var vendedor = await _context.Vendedores.FirstOrDefaultAsync(vendedor => vendedor.IdVendedor == id);
-            return vendedor ?? new Vendedor();
+            var cliente = await _context.Vendedores.FirstOrDefaultAsync(cliente => cliente.IdVendedor == id);
+            return cliente ?? new Vendedor();
         }
-
-        public async Task Add(Vendedor vendedor)
+        public async Task Add(Vendedor ClienteDB)
         {
-            await _context.Vendedores.AddAsync(vendedor);
+            await _context.Vendedores.AddAsync(ClienteDB);
             await _context.SaveChangesAsync();
         }
-
-        public async Task Update(Vendedor updatedVendedor)
+        public async Task Update(Vendedor updatedClienteDB)
         {
-            var vendedor = await _context.Vendedores.FirstOrDefaultAsync(vendedor => vendedor.IdVendedor == updatedVendedor.IdVendedor);
-            if (vendedor != null)
+            var ClienteDB = await _context.Vendedores.FirstOrDefaultAsync(ClienteDB => ClienteDB.IdVendedor == updatedClienteDB.IdVendedor);
+
+            if (ClienteDB != null)
             {
-                _context.Entry(vendedor).CurrentValues.SetValues(updatedVendedor);
+                _context.Entry(ClienteDB).CurrentValues.SetValues(updatedClienteDB);
                 await _context.SaveChangesAsync();
             }
         }
-
+        public async Task<Vendedor> GetVendedorByCorreoElectronico(string correo)
+        {
+            var cliente = await _context.Vendedores.FirstOrDefaultAsync(cliente => cliente.CorreoElectronico == correo);
+            return cliente ?? new Vendedor();
+        }
         public async Task Delete(int id)
         {
-            var vendedor = await _context.Vendedores.FirstOrDefaultAsync(vendedor => vendedor.IdVendedor == id);
-            if (vendedor != null)
+
+            // Verificar si el cliente existe
+            var existingCliente = await _context.Vendedores.FindAsync(id);
+            if (existingCliente == null)
             {
-                _context.Vendedores.Remove(vendedor);
-                await _context.SaveChangesAsync();
+                // El cliente no existe, puedes manejar este caso según tus necesidades
+                throw new Exception($"Vendedor con ID {id} no encontrado.");
             }
+
+            // Eliminar credenciales asociadas
+            var existingCredenciales = await _context.CredencialesVendedores
+                .Where(c => c.IdVendedor == id)
+                .ToListAsync();
+
+            _context.CredencialesVendedores.RemoveRange(existingCredenciales);
+
+            // Eliminar al cliente
+            _context.Vendedores.Remove(existingCliente);
+
+            // Guardar cambios en la base de datos
+            await _context.SaveChangesAsync();
         }
     }
 }

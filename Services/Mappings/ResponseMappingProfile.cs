@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using TostiElotes.Domain.Dtos;
 using TostiElotes.Domain.Entities;
 
-
 namespace TostiElotes.Services.Mappings
 {
-
     public class ResponseMappingProfile : Profile
     {
         public ResponseMappingProfile()
@@ -17,35 +11,61 @@ namespace TostiElotes.Services.Mappings
 
             // Mapeo entre Producto y ProductoDTO
             CreateMap<Producto, ProductoDTO>()
-                .ForMember(dest => dest.ID_Producto, opt => opt.MapFrom(src => src.IdProducto))
-                .ForMember(dest => dest.Precio, opt => opt.MapFrom(src => src.Precio));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Categoria, opt => opt.MapFrom(src => src.Categoria))
+                .ForMember(dest => dest.ClaveProducto, opt => opt.MapFrom(src => src.ClaveProducto))
+                .ForMember(dest => dest.NombreProducto, opt => opt.MapFrom(src => src.NombreProducto))
+                .ForMember(dest => dest.Descripcion, opt => opt.MapFrom(src => src.Descripcion))
+                .ForMember(dest => dest.ImagenProducto, opt => opt.MapFrom(src => src.ImagenProducto))
+                .ForMember(dest => dest.Tamano, opt => opt.MapFrom(src => src.Tamano))
+                .ForMember(dest => dest.Sabor, opt => opt.MapFrom(src => src.Sabor))
+                .ForMember(dest => dest.Precio, opt => opt.MapFrom(src => src.Precio))
+                .ForMember(dest => dest.Disponibilidad, opt => opt.MapFrom(src => src.Disponibilidad))
+                .ForMember(dest => dest.PromocionesDescuentos, opt => opt.MapFrom(src => src.PromocionesDescuentos))
+                .ForMember(dest => dest.IdPuesto, opt => opt.MapFrom(src => src.IdPuesto));
 
             // Mapeo entre Orden y OrdenDTO
-            CreateMap<Orden, OrderDTO>()
-                .ForMember(dest => dest.ID_Orden, opt => opt.MapFrom(src => src.IdOrden));
+            CreateMap<Orden, OrdenDTO>()
+                .ForMember(dest => dest.IdOrden, opt => opt.MapFrom(src => src.IdOrden));
 
             // Mapeo entre Cliente y ClienteDTO
             CreateMap<Cliente, ClienteDTO>()
-            .ForMember(dest => dest.ID_Cliente, opt => opt.MapFrom(src => src.IdCliente));
-
-            // Mapeo entre DetalleOrden y DetalleOrdenDTO
-            CreateMap<DetalleOrden, DetalleOrdenDTO>()
-                .ForMember(dest => dest.ID_Detalle, opt => opt.MapFrom(src => src.IdDetalle))
-                .ForMember(dest => dest.ID_Orden, opt => opt.MapFrom(src => src.IdOrden))
-                .ForMember(dest => dest.ID_Producto, opt => opt.MapFrom(src => src.IdProducto))
-                .ForMember(dest => dest.PrecioTotal, opt => opt.MapFrom(src => src.PrecioTotal));
-
-            // Mapeo entre EstadoEntrega y EstadoEntregaDTO
-            CreateMap<EstadoEntrega, EstadoEsntregaDTO>()
-                .ForMember(dest => dest.IdEstado, opt => opt.MapFrom(src => src.IdEstado))
-                .ForMember(dest => dest.IdOrden, opt => opt.MapFrom(src => src.IdOrden))
-                .ForMember(dest => dest.Estado, opt => opt.MapFrom(src => src.Estado))
-                .ForMember(dest => dest.Comentarios, opt => opt.MapFrom(src => src.Comentarios));
+            .ForMember(dest => dest.IdCliente, opt => opt.MapFrom(src => src.IdCliente));
 
             // Mapeo entre Vendedor y VendedorDTO
             CreateMap<Vendedor, VendedorDTO>()
-                .ForMember(dest => dest.ID_Vendedor, opt => opt.MapFrom(src => src.IdVendedor));
+                .ForMember(dest => dest.IdVendedor, opt => opt.MapFrom(src => src.IdVendedor));
+
+            CreateMap<CarritoDeCompra, CarritoDTO>(); // Ignora el mapeo de IdProducto
+            CreateMap<CredencialesCliente, LoginClienteDTO>(); // Ignora el mapeo de IdProducto
+            CreateMap<CredencialesVendedore, LoginVendedorDTO>(); // Ignora el mapeo de IdProducto
+
+            // Mapeo entre OrdenCreateDTO y Orden
+            CreateMap<PuestosNegocio, PuestoNegocioDTO>();
+            CreateMap<Repartidor, RepartidorDTO>();
+           // Mapeo de SeguimientoEstado a SeguimientoEstadoDTO
+        CreateMap<SeguimientoEstado, SeguimientoEstadoDTO>()
+            .ForMember(dest => dest.IdSeguimiento, opt => opt.MapFrom(src => src.IdSeguimiento))
+            .ForMember(dest => dest.IdOrden, opt => opt.MapFrom(src => src.IdOrden))
+            .ForMember(dest => dest.EstadoAnterior, opt => opt.MapFrom(src => src.EstadoAnterior))
+            .ForMember(dest => dest.EstadoActual, opt => opt.MapFrom(src => src.EstadoActual))
+            .ForMember(dest => dest.FechaCambio, opt => opt.MapFrom(src => src.FechaCambio));
+
+            CreateMap<VendedoresProducto, VendedorProductoDTO>()
+            .ForMember(dest => dest.IdVendedor, opt => opt.MapFrom(src => src.IdPuesto));
+            CreateMap<VendedoresPuesto, VendedorPuestoDTO>();
+
+            // Mapeo entre DetalleOrdenCreateDTO y DetalleOrden
+            CreateMap<DetalleCarrito, DetallesCarritoDTO>()
+            ;
+
+            // Mapeo entre EstadoEntregaCreateDTO y EstadoEntrega
+            CreateMap<Notificacione, NotificacionDTO>();
+
+            // Mapeo entre VendedorCreateDTO y Vendedor
+            CreateMap<Vendedor, VendedorDTO>()
+                        .ForMember(dest => dest.IdVendedor, opt => opt.MapFrom(src => src.IdVendedor));
+
         }
     }
 }
-
