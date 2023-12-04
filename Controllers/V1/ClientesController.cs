@@ -37,6 +37,8 @@ namespace TostiElotes.Controllers.V1
 
             if (cliente.IdCliente == 0)
                 return BadRequest("No se encontro el usuario");
+            if (cliente.IdCliente == 0)
+                return BadRequest("No se encontro el usuario");
 
             var dto = _mapper.Map<ClienteDTO>(cliente);
 
