@@ -53,7 +53,7 @@ namespace TostiElotes.Domain.Dtos
 
     public string? Descripcion { get; set; }
 
-    public byte[] ImagenProducto { get; set; } = null!;
+    public string ImagenProducto { get; set; } = null!;
 
     public string? Tamano { get; set; }
 

@@ -44,26 +44,19 @@ namespace TostiElotes.Controllers.V1
 
             return Ok(dto);
         }
-        // [HttpGet("{correo}")]
-        // public async Task<IActionResult> GetClienteByCorreoElectronico(string correo)
-        // {
-        //     try
-        //     {
-        //         var cliente = await CorreoElectronicoExists(correo);
+        [HttpGet("OrdenesCliente/{IdCliente:int}")]
+        public async Task<IActionResult> GetOrdenesByIdCliente(int IdCliente)
+        {
+            var cliente = await _clienteServices.GetOrdenesByIdCliente(IdCliente);
 
-        //         if (cliente.IdCliente == 0)
-        //             return NotFound($"No se encontró ningún cliente con el correo electrónico {correo}");
+            
+            if (cliente == null)
+                return BadRequest("No se encontro el usuario");
 
-        //         var dto = _mapper.Map<ClienteDTO>(cliente);
+            var dto = _mapper.Map<IEnumerable<OrdenDTO>>(cliente);
 
-        //         return Ok(dto);
-        //     }
-        //     catch (Exception)
-        //     {
-        //         // Log the exception
-        //         return StatusCode(500, "Error interno del servidor");
-        //     }
-        // }
+            return Ok(dto);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ClienteCreateDTO cliente)

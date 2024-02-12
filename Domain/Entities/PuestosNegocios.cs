@@ -9,7 +9,7 @@ public partial class PuestosNegocio
 
     public string NombreNegocio { get; set; } = null!;
 
-    public byte[] FotosRepresentativas { get; set; } = null!;
+    public string FotosRepresentativas { get; set; } = null!;
 
     public string UbicacionExacta { get; set; } = null!;
 

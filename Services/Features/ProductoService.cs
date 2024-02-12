@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using TostiElotes.Domain.Entities;
 using TostiElotes.Infrastructure.Repositories;
 
@@ -5,83 +10,47 @@ namespace TostiElotes.Services.Features
 {
     public class ProductoService
     {
+        private readonly ProductoRepository _productoRepository;
 
-        private readonly ProductoRepository _clienteRepository;
-
-        public ProductoService(ProductoRepository clienteRepository)
+        public ProductoService(ProductoRepository productoRepository)
         {
-            this._clienteRepository = clienteRepository;
+            _productoRepository = productoRepository ?? throw new ArgumentNullException(nameof(productoRepository));
         }
 
         public async Task<IEnumerable<Producto>> GetAll()
         {
-            return await _clienteRepository.GetAll();
+            return await _productoRepository.GetAll();
         }
 
         public async Task<Producto> GetById(int id)
         {
-            return await _clienteRepository.GetById(id);
+            return await _productoRepository.GetById(id);
+        }
+        public async Task<IEnumerable<Producto>> GetByIdPuesto(int id)
+        {
+            return await _productoRepository.GetByIdPuesto(id); 
+        }
+        public async Task Add(Producto producto)
+        {
+            await _productoRepository.Add(producto);
         }
 
-        public async Task<byte[]> LeerImagenComoBytesAsync(string imagen)
+        public async Task Update(Producto productoToUpdate)
         {
-            try
+            var producto = await GetById(productoToUpdate.Id);
+
+            if (producto != null)
             {
-                Uri? uriResult;
-                bool isUrl = Uri.TryCreate(imagen, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-
-                if (isUrl)
-                {
-                    // Descargar la imagen desde la URL
-                    using (HttpClient client = new HttpClient())
-                    {
-                        byte[] imagenEnBytes = await client.GetByteArrayAsync(imagen);
-                        return imagenEnBytes;
-                    }
-                }
-                else
-                {
-                    // Es una ruta local, leer la imagen desde el archivo
-                    using (FileStream fileStream = new FileStream(imagen, FileMode.Open, FileAccess.Read))
-                    {
-                        using (MemoryStream memoryStream = new MemoryStream())
-                        {
-                            await fileStream.CopyToAsync(memoryStream);
-                            return memoryStream.ToArray();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Manejar la excepción (por ejemplo, registrarla o lanzarla nuevamente)
-                throw new Exception($"Error al leer la imagen: {ex.Message}", ex);
-            }
-        }
-
-
-
-        public async Task Add(Producto cliente)
-        {
-            await _clienteRepository.Add(cliente);
-        }
-
-        public async Task Update(Producto clienteToUpdate)
-        {
-            var cliente = await GetById(clienteToUpdate.Id);
-
-            if (cliente.Id >= 0)
-            {
-                await _clienteRepository.Update(clienteToUpdate);
+                await _productoRepository.Update(productoToUpdate);
             }
         }
 
         public async Task Delete(int id)
         {
-            var cliente = await GetById(id);
-            if (cliente.Id >= 0)
+            var producto = await GetById(id);
+            if (producto != null)
             {
-                await _clienteRepository.Delete(id);
+                await _productoRepository.Delete(id);
             }
         }
     }

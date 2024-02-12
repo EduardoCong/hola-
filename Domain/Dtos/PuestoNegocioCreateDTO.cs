@@ -13,7 +13,7 @@ namespace TostiElotes.Domain.Dtos
         public string NombreNegocio { get; set; } = null!;
 
         [Required(ErrorMessage = "El campo FotosRepresentativas es obligatorio.")]
-        public byte[] FotosRepresentativas { get; set; } = null!;
+        public string FotosRepresentativas { get; set; } = null!;
 
         [Required(ErrorMessage = "El campo UbicacionExacta es obligatorio.")]
         public string UbicacionExacta { get; set; } = null!;
@@ -33,7 +33,7 @@ namespace TostiElotes.Domain.Dtos
 
         public string NombreNegocio { get; set; } = null!;
 
-        public byte[] FotosRepresentativas { get; set; } = null!;
+        public string FotosRepresentativas { get; set; } = null!;
 
         public string UbicacionExacta { get; set; } = null!;
 

@@ -22,6 +22,29 @@ namespace TostiElotes.Infrastructure.Repositories
             var cliente = await _context.Clientes.FirstOrDefaultAsync(cliente => cliente.IdCliente == id);
             return cliente ?? new Cliente();
         }
+
+        public async Task<IEnumerable<Orden>> GetOrdenesByIdCliente(int id)
+        {
+            // Obtener el carrito de compras del cliente
+            var carrito = await _context.CarritoDeCompras
+                .Where(orden => orden.IdCliente == id)
+                .FirstOrDefaultAsync();
+
+            if (carrito != null)
+            {
+                // Obtener las órdenes asociadas al carrito
+                var ordenes = await _context.Ordenes
+                    .Where(orden => orden.IdCarrito == carrito.IdCarrito)
+                    .ToListAsync();
+
+                return ordenes;
+            }
+
+            // Devolver una lista vacía en caso de que no se encuentre un carrito para el cliente
+            return new List<Orden>();
+        }
+
+
         public async Task<Cliente> GetClienteByCorreoElectronico(string correo)
         {
             var cliente = await _context.Clientes.FirstOrDefaultAsync(cliente => cliente.CorreoElectronico == correo);

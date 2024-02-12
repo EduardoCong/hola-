@@ -12,12 +12,14 @@ namespace TostiElotes.Controllers.V1
     {
         
         private readonly PuestoNegocioService _puestoService;
+        private readonly ProductoService _productoService;
 
         private readonly IMapper _mapper;
 
-        public PuestoController(PuestoNegocioService puestoNegocioService, IMapper mapper)
+        public PuestoController(PuestoNegocioService puestoNegocioService, ProductoService productoService, IMapper mapper)
         {
             this._puestoService = puestoNegocioService ?? throw new ArgumentNullException(nameof (puestoNegocioService));
+            this._productoService = productoService ?? throw new ArgumentNullException(nameof (productoService));
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -42,26 +44,19 @@ namespace TostiElotes.Controllers.V1
 
             return Ok(dto);
         }
-        // [HttpGet("{correo}")]
-        // public async Task<IActionResult> GetClienteByCorreoElectronico(string correo)
-        // {
-        //     try
-        //     {
-        //         var cliente = await CorreoElectronicoExists(correo);
 
-        //         if (cliente.Id == 0)
-        //             return NotFound($"No se encontró ningún cliente con el correo electrónico {correo}");
+        [HttpGet("ProductoPuesto/{id:int}")]
+        public async Task<IActionResult> GetByIdProductoPuesto(int IdPuesto)
+        {
+            var Puesto = await _productoService.GetByIdPuesto(IdPuesto);
 
-        //         var dto = _mapper.Map<PuestoNegocioDTO>(cliente);
+            if (Puesto == null )
+                return BadRequest("No se encontro el usuario");
 
-        //         return Ok(dto);
-        //     }
-        //     catch (Exception)
-        //     {
-        //         // Log the exception
-        //         return StatusCode(500, "Error interno del servidor");
-        //     }
-        // }
+            var dto = _mapper.Map<ProductoDTO>(Puesto);
+
+            return Ok(dto);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] PuestoNegocioCreateDTO cliente)

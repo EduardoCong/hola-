@@ -23,9 +23,13 @@ namespace TostiElotes.Infrastructure.Repositories
             var cliente = await _context.Productos.FirstOrDefaultAsync(cliente => cliente.Id == id);
             return cliente ?? new Producto();
         }
+        public async Task<IEnumerable<Producto>> GetByIdPuesto(int id)
+        {
+            return await _context.Productos.Where(producto => producto.IdPuesto == id).ToListAsync();
+        }
         public async Task Add(Producto producto)
         {
-           
+
             await _context.Productos.AddAsync(producto);
             await _context.SaveChangesAsync();
         }
@@ -47,25 +51,6 @@ namespace TostiElotes.Infrastructure.Repositories
             {
                 _context.Productos.Remove(ClienteDB);
                 await _context.SaveChangesAsync();
-            }
-        }
-         private static async Task<byte[]> LeerImagenComoBytesAsync(string rutaImagen)
-        {
-            try
-            {
-                using (FileStream fileStream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
-                {
-                    using (MemoryStream memoryStream = new MemoryStream())
-                    {
-                        await fileStream.CopyToAsync(memoryStream);
-                        return memoryStream.ToArray();
-                    }
-                }
-            }
-            catch (IOException ex)
-            {
-                // Manejar la excepción (por ejemplo, registrarla o lanzarla nuevamente)
-                throw new Exception($"Error al leer la imagen: {ex.Message}", ex);
             }
         }
     }

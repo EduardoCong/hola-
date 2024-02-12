@@ -10,8 +10,7 @@ namespace TostiElotes.Services.Mappings
         public MappingProfile()
         {
             // Mapeo entre ProductoCreateDTO y Producto
-            CreateMap<ProductoCreateDTO, Producto>()
-            .ForMember(dest => dest.ImagenProducto, opt => opt.MapFrom(src => LeerImagenComoBytesAsync(src.ImagenProducto))); // Ignora el mapeo de IdProducto
+            CreateMap<ProductoCreateDTO, Producto>();
             CreateMap<CarritoCreateDTO, CarritoDeCompra>(); // Ignora el mapeo de IdProducto
             CreateMap<LoginClienteCreateDTO, CredencialesCliente>(); // Ignora el mapeo de IdProducto
             CreateMap<LoginVendedorCreateDTO, CredencialesVendedore>(); // Ignora el mapeo de IdProducto
@@ -42,41 +41,6 @@ namespace TostiElotes.Services.Mappings
 
             // Mapeo entre VendedorCreateDTO y Vendedor
             CreateMap<VendedorCreateDTO, Vendedor>();
-        }
-        public async Task<byte[]> LeerImagenComoBytesAsync(string imagen)
-        {
-            try
-            {
-                Uri? uriResult;
-                bool isUrl = Uri.TryCreate(imagen, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-
-                if (isUrl)
-                {
-                    // Descargar la imagen desde la URL
-                    using (HttpClient client = new HttpClient())
-                    {
-                        byte[] imagenEnBytes = await client.GetByteArrayAsync(imagen);
-                        return imagenEnBytes;
-                    }
-                }
-                else
-                {
-                    // Es una ruta local, leer la imagen desde el archivo
-                    using (FileStream fileStream = new FileStream(imagen, FileMode.Open, FileAccess.Read))
-                    {
-                        using (MemoryStream memoryStream = new MemoryStream())
-                        {
-                            await fileStream.CopyToAsync(memoryStream);
-                            return memoryStream.ToArray();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Manejar la excepción (por ejemplo, registrarla o lanzarla nuevamente)
-                throw new Exception($"Error al leer la imagen: {ex.Message}", ex);
-            }
         }
 
     }

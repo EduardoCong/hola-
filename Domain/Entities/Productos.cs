@@ -15,7 +15,7 @@ public partial class Producto
 
     public string? Descripcion { get; set; }
 
-    public byte[] ImagenProducto { get; set; } = null!;
+    public string? ImagenProducto { get; set; } 
 
     public string? Tamano { get; set; }
 

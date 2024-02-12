@@ -24,6 +24,10 @@ namespace TostiElotes.Services.Features
         {
             return await _clienteRepository.GetById(id);
         }
+        public async Task<IEnumerable<Orden>> GetOrdenesByIdCliente(int id)
+        {
+            return await _clienteRepository.GetOrdenesByIdCliente(id);
+        }
         public async Task<Cliente> GetClienteByCorreoElectronico(string correo)
         {
             return await _clienteRepository.GetClienteByCorreoElectronico(correo);

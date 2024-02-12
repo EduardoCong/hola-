@@ -52,7 +52,6 @@ namespace TostiElotes.Controllers.V1
             }
 
             // Obtener los bytes de la imagen a partir de la ruta proporcionada
-            var imagenEnBytes = await _productoService.LeerImagenComoBytesAsync(cliente.ImagenProducto);
 
             // Crear una nueva instancia de Producto y asignar los valores
             Producto producto = new Producto
@@ -61,7 +60,7 @@ namespace TostiElotes.Controllers.V1
                 ClaveProducto = cliente.ClaveProducto,
                 NombreProducto = cliente.NombreProducto,
                 Descripcion = cliente.Descripcion,
-                ImagenProducto = imagenEnBytes,
+                ImagenProducto = cliente.ImagenProducto,
                 Tamano = cliente.Tamano,
                 Sabor = cliente.Sabor,
                 Precio = cliente.Precio,

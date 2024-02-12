@@ -464,17 +464,11 @@ C:\Users\anton\Desktop\Proyectos\App web\My first API\API de SnackApp\Order\Tost
 C:\Users\anton\Desktop\Proyectos\App web\My first API\API de SnackApp\Order\TostiElotes\TostiElotes\obj\Debug\net7.0\TostiElotes.pdb
 C:\Users\anton\Desktop\Proyectos\App web\My first API\API de SnackApp\Order\TostiElotes\TostiElotes\obj\Debug\net7.0\TostiElotes.genruntimeconfig.cache
 C:\Users\anton\Desktop\Proyectos\App web\My first API\API de SnackApp\Order\TostiElotes\TostiElotes\obj\Debug\net7.0\ref\TostiElotes.dll
-C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\publish\web.config
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\web.config
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\appsettings.Development.json
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\appsettings.json
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\Infrastructure\Data\order.library.data.json
-C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\publish\appsettings.Development.json
-C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\publish\appsettings.json
-C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\publish\Infrastructure\Data\order.library.data.json
-C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\publish\TostiElotes.deps.json
-C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\publish\TostiElotes.runtimeconfig.json
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\TostiElotes.deps.json
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\publish\TostiElotes.runtimeconfig.json
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\appsettings.json
@@ -555,3 +549,4 @@ C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElot
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\obj\Debug\net7.0\TostiElotes.genruntimeconfig.cache
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\obj\Debug\net7.0\ref\TostiElotes.dll
 C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\bin\Debug\net7.0\Infrastructure\Data\order.library.data.json
+C:\Users\anton\Desktop\Proyectos\App web\My first API\New api Snackapp\TostiElotes\obj\Debug\net7.0\TostiElotes.sourcelink.json
