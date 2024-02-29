@@ -24,6 +24,10 @@ namespace TostiElotes.Services.Features
         {
             return await _clienteRepository.GetById(id);
         }
+        public async Task<Vendedor> GetClientByCorreoAndContrasena(string correo, string contrasena)
+        {
+            return await _clienteRepository.GetClientByCorreoAndContrasena(correo, contrasena);
+        }
 
         public async Task Add(Vendedor cliente)
         {

@@ -52,7 +52,13 @@ builder.Services.AddTransient<VendedorProductoRepository>();
 builder.Services.AddScoped<VendedorPuestoService>();
 builder.Services.AddTransient<VendedorPuestoRepository>();
 
-
+builder.Services.AddCors(options => {
+    options.AddDefaultPolicy( policy => {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyMethod();
+        policy.AllowAnyHeader();
+    });
+});
 
 
 builder.Services.AddControllers();
@@ -79,5 +85,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseCors();
 app.Run();

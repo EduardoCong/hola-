@@ -160,7 +160,7 @@ namespace TostiElotes.Controllers.V1
             return Ok(dtos);
         }
 
-         [HttpGet("Existe/Producto/{id:int}")]
+        [HttpGet("Existe/Producto/{id:int}")]
         public async Task<ActionResult> GetProductoById(int id)
         {
             var vendedorPuesto = await _vendedoProductoService.GetById(id);
@@ -188,5 +188,31 @@ namespace TostiElotes.Controllers.V1
             var dtos = _mapper.Map<List<VendedorProductoDTO>>(puestos);
             return Ok(dtos);
         }
+
+        //VENDEDORES LOGIN
+        [HttpGet("login/{email}/{contraseña}")]
+        public async Task<IActionResult> Login(string email, string contraseña)
+        {
+            try
+            {
+                // Obtener todos los clientes
+                var vendedores = await _vendedorServices.GetClientByCorreoAndContrasena(email, contraseña);
+
+                if (vendedores.IdVendedor == 0)
+                    return BadRequest("No se encontro el usuario");
+
+                var dto = _mapper.Map<VendedorDTO>(vendedores);
+
+                return Ok(dto);
+               
+               
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción y devolver un mensaje de error
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
     }
+
 }

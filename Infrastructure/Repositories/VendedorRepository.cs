@@ -23,6 +23,11 @@ namespace TostiElotes.Infrastructure.Repositories
             var cliente = await _context.Vendedores.FirstOrDefaultAsync(cliente => cliente.IdVendedor == id);
             return cliente ?? new Vendedor();
         }
+        public async Task<Vendedor> GetClientByCorreoAndContrasena(string correo, string contrasena)
+        {
+            var cliente = await _context.Vendedores.FirstOrDefaultAsync(cliente => cliente.CorreoElectronico == correo && cliente.Contraseña == contrasena);
+            return cliente ?? new Vendedor();
+        }
         public async Task Add(Vendedor ClienteDB)
         {
             await _context.Vendedores.AddAsync(ClienteDB);

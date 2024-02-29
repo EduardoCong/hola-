@@ -30,6 +30,40 @@ namespace TostiElotes.Controllers.V1
             return Ok(clienteDtos);
         }
 
+
+        // [HttpGet("login/{email}/{contraseña}")]
+        // public async Task<IActionResult> Login(string email, string contraseña)
+        // {
+        //     try
+        //     {
+        //         // Obtener todos los clientes
+        //         var clientes = await _clienteServices.GetAll();
+
+        //         // Mapear a DTO
+        //         var clienteDtos = _mapper.Map<IEnumerable<ClienteDTO>>(clientes);
+
+        //         // Buscar el usuario por email
+        //         var findUser = clienteDtos.FirstOrDefault(e => e.CorreoElectronico.Equals(email));
+
+        //         if (findUser != null && findUser.Contrasena.Equals(contraseña))
+        //         {
+        //             // Devolver la información del usuario si el email y la contraseña coinciden
+        //             return Ok(new { Email = findUser.CorreoElectronico, Contraseña = findUser.Contrasena });
+        //         }
+        //         else
+        //         {
+        //             // Devolver un mensaje de error si no se encuentra el usuario o la contraseña no coincide
+        //             return BadRequest("Credenciales incorrectas");
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         // Manejar cualquier excepción y devolver un mensaje de error
+        //         return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+        //     }
+        // }
+
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -44,12 +78,13 @@ namespace TostiElotes.Controllers.V1
 
             return Ok(dto);
         }
+
         [HttpGet("OrdenesCliente/{IdCliente:int}")]
         public async Task<IActionResult> GetOrdenesByIdCliente(int IdCliente)
         {
             var cliente = await _clienteServices.GetOrdenesByIdCliente(IdCliente);
 
-            
+
             if (cliente == null)
                 return BadRequest("No se encontro el usuario");
 
