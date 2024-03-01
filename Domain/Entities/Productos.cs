@@ -15,7 +15,7 @@ public partial class Producto
 
     public string? Descripcion { get; set; }
 
-    public string? ImagenProducto { get; set; } 
+    public string? ImagenProducto { get; set; }
 
     public string? Tamano { get; set; }
 
@@ -32,6 +32,9 @@ public partial class Producto
     public virtual ICollection<DetalleCarrito> DetalleCarrito { get; set; } = new List<DetalleCarrito>();
 
     public virtual PuestosNegocio? IdPuestoNavigation { get; set; }
+
+    public virtual ICollection<Extras> Extras { get; set; } = new List<Extras>();
+
 
     public virtual ICollection<VendedoresProducto> VendedoresProductos { get; set; } = new List<VendedoresProducto>();
 }

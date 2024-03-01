@@ -3404,24 +3404,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Roger Uicab\\.nuget\\packages\\": {}
+    "C:\\Users\\aleja\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Roger Uicab\\Downloads\\API_SnackApp\\TostiElotes.csproj",
+      "projectUniqueName": "C:\\Users\\aleja\\OneDrive\\Escritorio\\api\\API_SnackApp\\TostiElotes.csproj",
       "projectName": "TostiElotes",
-      "projectPath": "C:\\Users\\Roger Uicab\\Downloads\\API_SnackApp\\TostiElotes.csproj",
-      "packagesPath": "C:\\Users\\Roger Uicab\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Roger Uicab\\Downloads\\API_SnackApp\\obj\\",
+      "projectPath": "C:\\Users\\aleja\\OneDrive\\Escritorio\\api\\API_SnackApp\\TostiElotes.csproj",
+      "packagesPath": "C:\\Users\\aleja\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\aleja\\OneDrive\\Escritorio\\api\\API_SnackApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Roger Uicab\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\aleja\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3487,19 +3489,19 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.12, 7.0.12]"
+            "version": "[7.0.14, 7.0.14]"
           },
           {
             "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[7.0.12, 7.0.12]"
+            "version": "[7.0.14, 7.0.14]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.12, 7.0.12]"
+            "version": "[7.0.14, 7.0.14]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.12, 7.0.12]"
+            "version": "[7.0.14, 7.0.14]"
           }
         ],
         "frameworkReferences": {
@@ -3510,7 +3512,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-rc.2.23502.2\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

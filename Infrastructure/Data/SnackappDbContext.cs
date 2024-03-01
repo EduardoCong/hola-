@@ -22,6 +22,7 @@ public partial class SnackappDbContext : DbContext
     public virtual DbSet<CredencialesVendedore> CredencialesVendedores { get; set; }
 
     public virtual DbSet<DetalleCarrito> DetalleCarrito { get; set; }
+    public virtual DbSet<Extra> Extra { get; set; }
 
     public virtual DbSet<Notificacione> Notificaciones { get; set; }
 
@@ -43,6 +44,7 @@ public partial class SnackappDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CarritoDeComprasConfiguration());
+        modelBuilder.ApplyConfiguration(new ExtrasConfiguration());
         modelBuilder.ApplyConfiguration(new ClienteConfiguration());
         modelBuilder.ApplyConfiguration(new DetalleCarritoConfiguration());
         modelBuilder.ApplyConfiguration(new LoginClienteConfiguration());

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TostiElotes")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f423c9e5d885a8de7f7c848be2b1b6479729b64e")]
 [assembly: System.Reflection.AssemblyProductAttribute("TostiElotes")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TostiElotes")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
