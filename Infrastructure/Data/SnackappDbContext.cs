@@ -44,7 +44,7 @@ public partial class SnackappDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CarritoDeComprasConfiguration());
-        modelBuilder.ApplyConfiguration(new ExtrasConfiguration());
+        modelBuilder.ApplyConfiguration(new ExtraeduasConfiguration());
         modelBuilder.ApplyConfiguration(new ClienteConfiguration());
         modelBuilder.ApplyConfiguration(new DetalleCarritoConfiguration());
         modelBuilder.ApplyConfiguration(new LoginClienteConfiguration());
